@@ -1,0 +1,58 @@
+{
+  "vendor": "Synaptics DisplayLink",
+  "version": "4.2.0",
+  "apk": "DisplayLink® USB Graphics Software for Android 4.2.0-EXE.apk",
+  "apkSha256": "bd357ce3267763e9c8f0ee2cef5be7710002126933417b306080f8d94a444c33",
+  "assets": [
+    {
+      "path": "app-mirror/src/main/jniLibs/arm64-v8a/libAndroidDLM.so",
+      "apkEntry": "lib/arm64-v8a/libAndroidDLM.so",
+      "sha256": "2e43ad6e438c75ff8b7cec2b4f778de1c998f7f9e65f6a7966f3a7ebbcf9ff39"
+    },
+    {
+      "path": "app-mirror/src/main/jniLibs/arm64-v8a/libDisplayLinkManager.so",
+      "apkEntry": "lib/arm64-v8a/libDisplayLinkManager.so",
+      "sha256": "fd4a4a64124bc059b62aa8d0da3aa019e64a6459f473bbb2b76c7c97de0ba10d"
+    },
+    {
+      "path": "app-mirror/src/main/jniLibs/arm64-v8a/libusb_android.so",
+      "apkEntry": "lib/arm64-v8a/libusb_android.so",
+      "sha256": "e883cdda1998ad5bcd9943710c27bbec186985082f348bb3e853302681930230"
+    },
+    {
+      "path": "app-mirror/src/main/jniLibs/armeabi-v7a/libAndroidDLM.so",
+      "apkEntry": "lib/armeabi-v7a/libAndroidDLM.so",
+      "sha256": "959f8b6c155315c8d18b2d3e8ce6fb4b81f5649d3befcd2f0c14cd6cfde39273"
+    },
+    {
+      "path": "app-mirror/src/main/jniLibs/armeabi-v7a/libDisplayLinkManager.so",
+      "apkEntry": "lib/armeabi-v7a/libDisplayLinkManager.so",
+      "sha256": "6309ea987a0cdb5696f79b9b5c10e0ff8c16cd0cffb21aa49cdb7402706ae0c7"
+    },
+    {
+      "path": "app-mirror/src/main/jniLibs/armeabi-v7a/libusb_android.so",
+      "apkEntry": "lib/armeabi-v7a/libusb_android.so",
+      "sha256": "6bc370b3a03a3a0939a3dcd8a6e24f0cfc2854f5e1cd3e5e40547c7660640817"
+    },
+    {
+      "path": "app-mirror/src/main/assets/ella-dock-release.spkg",
+      "apkEntry": "assets/ella-dock-release.spkg",
+      "sha256": "4a5442c5b55eae9021c6f7d6f00b9eee7d20c19c0487107bba4bc450405fa2ad"
+    },
+    {
+      "path": "app-mirror/src/main/assets/firefly-monitor-release.spkg",
+      "apkEntry": "assets/firefly-monitor-release.spkg",
+      "sha256": "44d69b31e9d35e1acab322986b12ec0cff50b2fb7d5164426f283d5e54cdfeab"
+    },
+    {
+      "path": "app-mirror/src/main/assets/navarro-dock-release.spkg",
+      "apkEntry": "assets/navarro-dock-release.spkg",
+      "sha256": "9a222fe80f6e9b094fbe03511b23e0395eee482cf3b8de02a723b4d4cc426b50"
+    },
+    {
+      "path": "app-mirror/src/main/assets/ridge-dock-release.spkg",
+      "apkEntry": "assets/ridge-dock-release.spkg",
+      "sha256": "a6fee6dbdd2dc575da94e156ef163cc8f0682ac3dbe864d5cf830a437dd1cd57"
+    }
+  ]
+}

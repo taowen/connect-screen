@@ -26,6 +26,10 @@
 
 本应用使用了DisplayLink®的驱动程序(.so文件)用于支持DisplayLink®设备的连接功能。DisplayLink®是Synaptics Incorporated的注册商标。我们仅将其驱动程序用于实现与DisplayLink®设备的兼容性，未对驱动程序进行任何修改。
 
+当前 native 库和固件来自同一份 Android 4.2.0 APK，来源及 SHA-256 见
+[DisplayLink 组件清单](app-mirror/displaylink-assets.json)。更新时必须成套替换；
+启动前按内容校验并原子更新应用私有目录中的固件，避免升级后继续使用旧缓存。
+
 - DisplayLink®驱动程序的所有权利均属于Synaptics Incorporated
 - 本应用仅将DisplayLink®驱动用于其预期用途，即支持DisplayLink®设备的连接
 - 用户在使用DisplayLink®相关功能时应遵守Synaptics Incorporated的相关许可条款

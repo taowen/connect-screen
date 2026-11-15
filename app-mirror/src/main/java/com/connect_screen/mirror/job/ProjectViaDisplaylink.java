@@ -28,6 +28,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public class ProjectViaDisplaylink implements Job {
     private final AcquireShizuku acquireShizuku = new AcquireShizuku();
@@ -118,35 +123,51 @@ public class ProjectViaDisplaylink implements Job {
         }, 5000);
     }
 
+    private static byte[] firmwareDigest(InputStream input) throws IOException {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] buffer = new byte[8192];
+            int read;
+            while ((read = input.read(buffer)) != -1) digest.update(buffer, 0, read);
+            return digest.digest();
+        } catch (NoSuchAlgorithmException impossible) {
+            throw new AssertionError(impossible);
+        }
+    }
+
     private void copyFirmwares(Context context) {
         try {
             String[] files = context.getAssets().list("");
-            if (files == null) {
-                return;
-            }
+            if (files == null) throw new IOException("Firmware assets unavailable");
             for (String file : files) {
-                if (!file.endsWith(".spkg")) {
-                    continue;
+                if (!file.endsWith(".spkg")) continue;
+                File target = new File(context.getFilesDir(), file);
+                byte[] expected;
+                try (InputStream in = context.getAssets().open(file)) {
+                    expected = firmwareDigest(in);
                 }
-                File targetFile = new File(context.getFilesDir(), file);
-                if (targetFile.exists() && targetFile.length() > 0) {
-                    State.log("固件文件已存在，跳过: " + file);
-                    continue;
-                }
-                try (InputStream in = context.getAssets().open(file);
-                     FileOutputStream out = context.openFileOutput(file, Context.MODE_PRIVATE)) {
-                    byte[] buffer = new byte[4096];
-                    int read;
-                    while ((read = in.read(buffer)) != -1) {
-                        out.write(buffer, 0, read);
+                if (target.isFile()) {
+                    try (InputStream in = Files.newInputStream(target.toPath())) {
+                        if (Arrays.equals(expected, firmwareDigest(in))) continue;
                     }
-                    State.log("成功复制固件文件: " + file);
-                } catch (IOException e) {
-                    State.log("复制固件文件失败: " + file + ", 错误: " + e.getMessage());
+                }
+                File temporary = File.createTempFile(".displaylink-firmware-", ".tmp", context.getFilesDir());
+                try {
+                    try (InputStream in = context.getAssets().open(file);
+                         FileOutputStream out = new FileOutputStream(temporary)) {
+                        byte[] buffer = new byte[8192];
+                        int read;
+                        while ((read = in.read(buffer)) != -1) out.write(buffer, 0, read);
+                        out.getFD().sync();
+                    }
+                    Files.move(temporary.toPath(), target.toPath(),
+                            StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+                } finally {
+                    Files.deleteIfExists(temporary.toPath());
                 }
             }
-        } catch (IOException e) {
-            State.log("复制固件失败: " + e.getMessage());
+        } catch (IOException error) {
+            throw new IllegalStateException("DisplayLink firmware preparation failed", error);
         }
     }
 
